@@ -6,6 +6,8 @@ import XCTest
 import Combine
 import CoreData
 @testable import Pulse
+
+#if canImport(AttributedString)
 @testable import PulseUI
 
 final class ConsoleDataSourceTests: ConsoleTestCase, ConsoleDataSourceDelegate {
@@ -246,3 +248,4 @@ private func isOrderedBefore(_ lhs: NSManagedObject, _ rhs: NSManagedObject) -> 
     return lhs > rhs
 #endif
 }
+#endif

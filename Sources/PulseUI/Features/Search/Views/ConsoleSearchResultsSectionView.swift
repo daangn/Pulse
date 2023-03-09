@@ -61,8 +61,10 @@ struct ConsoleSearchResultView: View {
             Text(occurrence.scope.fullTitle + " (\(occurrence.line):\(occurrence.range.lowerBound + 1))")
                 .font(ConsoleConstants.fontTitle)
                 .foregroundColor(.secondary)
+#if canImport(AttributedString)
             Text(occurrence.preview)
                 .lineLimit(3)
+#endif
         }
 #if os(macOS)
             .backport.listRowSeparators(isHidden: false)
