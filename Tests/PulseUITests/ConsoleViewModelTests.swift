@@ -4,6 +4,7 @@
 
 import XCTest
 @testable import Pulse
+#if canImport(AttributedString)
 @testable import PulseUI
 
 final class ConsoleEnvironmentTests: ConsoleTestCase {
@@ -74,3 +75,4 @@ final class ConsoleEnvironmentTests: ConsoleTestCase {
         wait(for: [expectation], timeout: 2)
     }
 }
+#endif

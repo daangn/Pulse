@@ -59,8 +59,10 @@ struct ConsoleSearchResultView: View {
     @ViewBuilder
     private func makeCell(for occurrence: ConsoleSearchOccurrence) -> some View {
         let contents = VStack(alignment: .leading, spacing: 4) {
+#if canImport(AttributedString)
             Text(occurrence.preview)
                 .lineLimit(3)
+#endif
             Text(occurrence.scope.title + " (\(occurrence.line):\(occurrence.range.lowerBound + 1))")
                 .font(ConsoleConstants.fontInfo)
                 .foregroundColor(.secondary)

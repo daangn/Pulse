@@ -7,6 +7,7 @@ import Combine
 @testable import Pulse
 @testable import PulseUI
 
+#if canImport(AttributedString)
 class ConsoleTestCase: XCTestCase {
     var store: LoggerStore!
     let directory = TemporaryDirectory()
@@ -27,3 +28,4 @@ class ConsoleTestCase: XCTestCase {
         directory.remove()
     }
 }
+#endif
