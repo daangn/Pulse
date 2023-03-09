@@ -16,7 +16,9 @@ final class ConsoleSearchOccurrence: Identifiable, Equatable, Hashable {
     let match: ConsoleSearchMatch
     var line: Int { match.lineNumber }
     var range: NSRange { NSRange(match.range, in: match.line) }
+#if canImport(AttributedString)
     lazy var preview = ConsoleSearchOccurrence.makePreview(for: match, attributes: previewAttibutes)
+#endif
     let searchContext: RichTextViewModel.SearchContext
 
     init(scope: ConsoleSearchScope,
@@ -38,6 +40,7 @@ final class ConsoleSearchOccurrence: Identifiable, Equatable, Hashable {
 
 private let previewAttibutes = TextHelper().attributes(role: .body2, style: .monospaced)
 
+#if canImport(AttributedString)
 @available(iOS 15, *)
 extension ConsoleSearchOccurrence {
     static func makePreview(for match: ConsoleSearchMatch, attributes customAttributes: [NSAttributedString.Key: Any] = [:]) -> AttributedString {
@@ -69,6 +72,7 @@ extension ConsoleSearchOccurrence {
         return AttributedString(prefix, attributes: attributes) + middle + AttributedString(suffix, attributes: attributes)
     }
 }
+#endif
 
 private extension Substring {
     mutating func trimPrefix(while closure: (Character) -> Bool) {

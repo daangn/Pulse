@@ -4,6 +4,7 @@
 
 import XCTest
 @testable import Pulse
+#if canImport(AttributedString)
 @testable import PulseUI
 
 #if DEBUG
@@ -13,4 +14,5 @@ final class MockTests: XCTestCase {
         XCTAssertEqual(entity.url, "https://github.com/login?scopes=profile,repos")
     }
 }
+#endif
 #endif

@@ -7,6 +7,7 @@
 import XCTest
 import Combine
 @testable import Pulse
+#if canImport(AttributedString)
 @testable import PulseUI
 
 final class NetworkLoggerInsightsTests: ConsoleTestCase {
@@ -63,5 +64,5 @@ final class NetworkLoggerInsightsTests: ConsoleTestCase {
         XCTAssertEqual(failures.count, 2)
     }
 }
-
+#endif
 #endif

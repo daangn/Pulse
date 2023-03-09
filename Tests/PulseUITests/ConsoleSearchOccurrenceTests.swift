@@ -9,6 +9,7 @@ import Combine
 @testable import Pulse
 @testable import PulseUI
 
+#if canImport(AttributedString)
 @available(iOS 15, macOS 15, *)
 final class ConsoleSearchOccurrenceTests: XCTestCase {
     func testMakeSimplePreview() throws {
@@ -75,5 +76,5 @@ final class ConsoleSearchOccurrenceTests: XCTestCase {
         XCTAssertEqual(String(preview.characters), #"…tar_url":"https://avatars.githubusercontent.com/u/9343331?"}}"#)
     }
 }
-
+#endif
 #endif

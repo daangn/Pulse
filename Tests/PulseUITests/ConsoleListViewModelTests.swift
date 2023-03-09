@@ -6,6 +6,7 @@ import XCTest
 import Combine
 import CoreData
 @testable import Pulse
+#if canImport(AttributedString)
 @testable import PulseUI
 
 @available(iOS 14, *)
@@ -240,3 +241,4 @@ private func isOrderedBefore(_ lhs: NSManagedObject, _ rhs: NSManagedObject) -> 
     return lhs > rhs
 #endif
 }
+#endif

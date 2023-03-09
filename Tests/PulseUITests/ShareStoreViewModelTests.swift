@@ -6,6 +6,7 @@
 
 import XCTest
 @testable import Pulse
+#if canImport(AttributedString)
 @testable import PulseUI
 
 final class ShareStoreViewModelTests: ConsoleTestCase {
@@ -39,5 +40,5 @@ final class ShareStoreViewModelTests: ConsoleTestCase {
         XCTAssertNotNil(content.item)
     }
 }
-
+#endif
 #endif
