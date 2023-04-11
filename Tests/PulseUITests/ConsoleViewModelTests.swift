@@ -22,7 +22,7 @@ final class ConsoleViewModelTests: ConsoleTestCase {
     }
 
     private func reset() {
-        sut = ConsoleViewModel(store: store, context: context, mode: mode, isOnlyNetwork: isOnlyNetwork)
+        sut = ConsoleViewModel(store: store, context: context, mode: mode)
     }
 
     // MARK: Counters

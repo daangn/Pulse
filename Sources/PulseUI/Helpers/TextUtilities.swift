@@ -46,23 +46,31 @@ enum TextUtilities {
             insert(#"span { line-height: 1.4; }"#, at: range.upperBound)
             insert(#"body { word-wrap: break-word;  padding: 8px; }"#, at: range.upperBound)
             // TODO: Rewrite this without sync
-            DispatchQueue.main.sync {
+            if Thread.isMainThread {
                 if isDarkMode {
                     insert(#"body { background-color: #2C2A28; }"#, at: range.upperBound)
+                }
+            } else {
+                DispatchQueue.main.sync {
+                    if isDarkMode {
+                        insert(#"body { background-color: #2C2A28; }"#, at: range.upperBound)
+                    }
                 }
             }
         }
 
         if let range = getRange(of: "</style>") {
-            let regular = #"font-family: 'SF Pro Text', -apple-system, sans-serif"#
-            let mono = #"font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, monospace;"#
             do {
+                let regular = #"font-family: 'SF Pro Text', -apple-system, sans-serif"#
                 let regex = try NSRegularExpression(pattern: "font-family: '.SFUI-\\w*'", options: [])
                 regex.replaceMatches(in: html, range: NSRange(location: 0, length: range.upperBound), withTemplate: regular)
             } catch {
                 // Should never happen
             }
+        }
+        if let range = getRange(of: "</style>") {
             do {
+                let mono = #"font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, monospace;"#
                 let regex = try NSRegularExpression(pattern: "font-family: '.AppleSystemUIFontMonospaced-\\w*'", options: [])
                 regex.replaceMatches(in: html, range: NSRange(location: 0, length: range.upperBound), withTemplate: mono)
             } catch {

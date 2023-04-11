@@ -11,15 +11,12 @@ import Combine
 
 public struct ConsoleView: View {
     @StateObject private var viewModel: ConsoleViewModel // Never reloads
-
-    public init(store: LoggerStore = .shared) {
-        self.init(viewModel: .init(store: store))
-    }
+    @Environment(\.presentationMode) private var presentationMode
+    private var isCloseButtonHidden = false
 
     init(viewModel: ConsoleViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
-
 
     public var body: some View {
         ConsoleListView(viewModel: viewModel)
@@ -28,6 +25,13 @@ public struct ConsoleView: View {
             .navigationTitle(viewModel.title)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
+                    if !isCloseButtonHidden && presentationMode.wrappedValue.isPresented {
+                        Button("Close") {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
+                }
+                ToolbarItemGroup(placement: .navigationBarLeading) {
                     leadingNavigationBarItems
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -35,6 +39,13 @@ public struct ConsoleView: View {
                 }
             }
             .background(ConsoleRouterView(viewModel: viewModel))
+    }
+
+    /// Changes the default close button visibility.
+    public func closeButtonHidden(_ isHidden: Bool = true) -> ConsoleView {
+        var copy = self
+        copy.isCloseButtonHidden = isHidden
+        return copy
     }
 
     private var leadingNavigationBarItems: some View {
@@ -157,6 +168,6 @@ struct ConsoleView_Previews: PreviewProvider {
 extension ConsoleView {
     /// Creates a view pre-configured to display only network requests
     public static func network(store: LoggerStore = .shared) -> ConsoleView {
-        ConsoleView(viewModel: .init(store: store, isOnlyNetwork: true))
+        ConsoleView(viewModel: .init(store: store, mode: .network))
     }
 }
