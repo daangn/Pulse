@@ -133,9 +133,12 @@ final class ConsoleViewModel: ObservableObject {
 
         criteria.bind(listViewModel.$entities)
 
-        Publishers.CombineLatest3(criteria.$criteria, criteria.$focus, criteria.$isOnlyErrors).sink { [weak self] in
-            self?.refreshCountObservers(criteria: $0, focus: $1, isOnlyError: $2)
-        }.store(in: &cancellables)
+        Publishers.CombineLatest3(criteria.$criteria, criteria.$focus, criteria.$isOnlyErrors)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.refreshCountObservers(criteria: $0, focus: $1, isOnlyError: $2)
+            }
+            .store(in: &cancellables)
     }
 
     private func refreshCountObservers(criteria: ConsoleSearchCriteria, focus: NSPredicate?, isOnlyError: Bool) {
