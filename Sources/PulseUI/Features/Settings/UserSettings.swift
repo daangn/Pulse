@@ -6,8 +6,8 @@ import SwiftUI
 import Pulse
 import Combine
 
-final class UserSettings: ObservableObject {
-    static let shared = UserSettings()
+public final class UserSettings: ObservableObject {
+    public static let shared = UserSettings()
 
     @AppStorage("console-cell-line-limit")
     var lineLimit: Int = 4
