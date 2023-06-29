@@ -16,7 +16,9 @@ final class ConsoleSearchOccurrence: Identifiable, Equatable, Hashable {
     let match: ConsoleSearchMatch
     var line: Int { match.lineNumber }
     var range: NSRange { NSRange(match.range, in: match.line) }
+#if canImport(AttributedString)
     lazy var preview = ConsoleSearchOccurrence.makePreview(for: match, attributes: previewAttibutes)
+#endif
     let searchContext: RichTextViewModel.SearchContext
 
     init(scope: ConsoleSearchScope,
@@ -40,6 +42,7 @@ private let previewAttibutes = TextHelper().attributes(role: .body2, style: .mon
 
 @available(iOS 15, *)
 extension ConsoleSearchOccurrence {
+#if canImport(AttributedString)
     static func makePreview(for match: ConsoleSearchMatch, attributes customAttributes: [NSAttributedString.Key: Any] = [:]) -> AttributedString {
 
         let prefixStartIndex = match.line.index(match.range.lowerBound, offsetBy: -50, limitedBy: match.line.startIndex) ?? match.line.startIndex
@@ -68,6 +71,7 @@ extension ConsoleSearchOccurrence {
         middle.foregroundColor = .orange
         return AttributedString(prefix, attributes: attributes) + middle + AttributedString(suffix, attributes: attributes)
     }
+#endif
 }
 
 private extension Substring {
