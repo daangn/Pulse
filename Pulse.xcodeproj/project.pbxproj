@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -271,6 +271,8 @@
 		0CFF79DD29EB7A8E00BE767B /* SessionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF79DB29EB7A8B00BE767B /* SessionListView.swift */; };
 		0CFF79DF29EB7B4300BE767B /* SessionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF79DE29EB7B4300BE767B /* SessionPickerView.swift */; };
 		0CFF79E229EC1FA200BE767B /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFF79E029EC1F7800BE767B /* ImageProcessor.swift */; };
+		DB0BFB512B58CA1300807165 /* LoggerStore+StoreSimpleNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0BFB502B58CA1300807165 /* LoggerStore+StoreSimpleNetwork.swift */; };
+		DB0BFB552B58CC4400807165 /* NetworkLogger+Entities+PublicInit.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0BFB542B58CC4400807165 /* NetworkLogger+Entities+PublicInit.swift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -727,6 +729,8 @@
 		0CFF79E029EC1F7800BE767B /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 		49E82A8526D107A00070244F /* AlamofireIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireIntegration.swift; sourceTree = "<group>"; };
 		49E82A8826D1083D0070244F /* MoyaIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaIntegration.swift; sourceTree = "<group>"; };
+		DB0BFB502B58CA1300807165 /* LoggerStore+StoreSimpleNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoggerStore+StoreSimpleNetwork.swift"; sourceTree = "<group>"; };
+		DB0BFB542B58CC4400807165 /* NetworkLogger+Entities+PublicInit.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkLogger+Entities+PublicInit.swift.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1104,6 +1108,7 @@
 				0CF0D491296F14CF00EED9D4 /* URLSessionProxy.swift */,
 				0CF5E9CC2A0138BD00E68548 /* URLSessionMockManager.swift */,
 				0CF0D492296F14CF00EED9D4 /* NetworkLogger.swift */,
+				DB0BFB542B58CC4400807165 /* NetworkLogger+Entities+PublicInit.swift.swift */,
 			);
 			path = NetworkLogger;
 			sourceTree = "<group>";
@@ -1130,6 +1135,7 @@
 				0CF0D4A2296F14CF00EED9D4 /* LoggerStore+Model.swift */,
 				0CFD1CDA29E2E8FD003872EF /* LoggerStore+Remote.swift */,
 				0CF0D49F296F14CF00EED9D4 /* LoggerStore+Extensions.swift */,
+				DB0BFB502B58CA1300807165 /* LoggerStore+StoreSimpleNetwork.swift */,
 			);
 			path = LoggerStore;
 			sourceTree = "<group>";
@@ -1956,6 +1962,8 @@
 				0CF0D558296F15F600EED9D4 /* RemoteLogger-Protocol.swift in Sources */,
 				0C20F3E42A2CE9D900F2F67D /* Keychain.swift in Sources */,
 				0CF0D559296F15FA00EED9D4 /* LoggerStore+Model.swift in Sources */,
+				DB0BFB552B58CC4400807165 /* NetworkLogger+Entities+PublicInit.swift.swift in Sources */,
+				DB0BFB512B58CA1300807165 /* LoggerStore+StoreSimpleNetwork.swift in Sources */,
 				0CF0D550296F15F200EED9D4 /* URLSessionProxy.swift in Sources */,
 				0CF0D556296F15F600EED9D4 /* RemoteLogger-Connection.swift in Sources */,
 				0CF0D55B296F15FA00EED9D4 /* LoggerStore+Level.swift in Sources */,
