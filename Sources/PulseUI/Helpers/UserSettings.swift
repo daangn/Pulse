@@ -51,6 +51,10 @@ public final class UserSettings: ObservableObject {
     @AppStorage("com.github.kean.pulse.isRemoteLoggingAllowed")
     public var isRemoteLoggingHidden = false
 
+    /// If enabled, uses the new collapsible JSON viewer for API responses. By default, `true`.
+    @AppStorage("com.github.kean.pulse.useCollapsibleJSONViewer")
+    public var useCollapsibleJSONViewer = true
+
     /// Task cell display options.
     public var listDisplayOptions: ConsoleListDisplaySettings {
         get {
