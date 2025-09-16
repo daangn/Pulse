@@ -7,13 +7,13 @@
 import SwiftUI
 import Pulse
 
-@available(macOS 13, *)
 struct SettingsView: View {
     @State private var isPresentingShareStoreView = false
     @State private var shareItems: ShareItems?
 
     @Environment(\.store) private var store
     @EnvironmentObject private var environment: ConsoleEnvironment
+    @EnvironmentObject private var settings: UserSettings
 
     var body: some View {
         List {
@@ -25,6 +25,13 @@ struct SettingsView: View {
                         .foregroundColor(.secondary)
                 }
             }
+            Section("Display") {
+                Toggle("Collapsible JSON Viewer", isOn: $settings.useCollapsibleJSONViewer)
+                Text("When enabled, JSON responses will be displayed with collapsible nodes")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            
             Section("Store") {
                 // TODO: load this info async
                 //                if #available(macOS 13, *), let info = try? store.info() {
@@ -51,7 +58,6 @@ struct SettingsView: View {
 // MARK: - Preview
 
 #if DEBUG
-@available(macOS 13, *)
 struct UserSettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()

@@ -30,6 +30,8 @@ struct FileViewer: View {
             ScrollView {
                 ImageViewer(viewModel: viewModel)
             }
+        case .json(let viewModel):
+            JSONViewer(viewModel: viewModel)
 #if os(iOS) || os(visionOS)
         case .pdf(let document):
             PDFKitRepresentedView(document: document)

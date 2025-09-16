@@ -26,26 +26,32 @@ package final class TextRendererJSON {
     private var elements: [(NSRange, JSONElement, JSONContainerNode?)] = []
     private var errorRange: NSRange?
     private var string = ""
+    private var collapsedPaths: Set<String> = []
+    private var nodesByPath: [String: JSONContainerNode] = [:]
 
-    package init(json: Any, error: NetworkLogger.DecodingError? = nil, options: TextRenderer.Options = .init()) {
+    package init(json: Any, error: NetworkLogger.DecodingError? = nil, options: TextRenderer.Options = .init(), collapsedPaths: Set<String> = [], nodesByPath: [String: JSONContainerNode] = [:]) {
         self.options = options
         self.helper = TextHelper()
         self.json = json
         self.error = error
+        self.collapsedPaths = collapsedPaths
+        self.nodesByPath = nodesByPath
     }
 
     package func render() -> NSAttributedString {
-        render(json: json, isFree: true)
+        render(json: json, path: "$", isFree: true)
 
         let output = NSMutableAttributedString(string: string, attributes: helper.attributes(role: .body2, style: .monospaced, color: color(for: .key)))
         for (range, element, node) in elements {
             output.addAttribute(.foregroundColor, value: color(for: element), range: range)
-#if os(macOS)
-            if let node = node, TextRendererJSON.makeErrorAttributes != nil {
+            if let node = node {
                 output.addAttribute(.node, value: node, range: range)
-                output.addAttribute(.cursor, value: NSCursor.pointingHand, range: range)
-            }
+#if os(macOS)
+                if TextRendererJSON.makeErrorAttributes != nil {
+                    output.addAttribute(.cursor, value: NSCursor.pointingHand, range: range)
+                }
 #endif
+            }
         }
         if let range = errorRange {
             output.addAttributes(makeErrorAttributes(), range: range)
@@ -77,17 +83,17 @@ package final class TextRendererJSON {
 
     // MARK: - Walk JSON
 
-    private func render(json: Any, isFree: Bool) {
+    private func render(json: Any, path: String, isFree: Bool) {
         switch json {
         case let object as [String: Any]:
             if isFree {
                 indent()
             }
-            renderObject(object)
+            renderObject(object, path: path)
         case let string as String:
             renderString(string)
         case let array as [Any]:
-            renderArray(array)
+            renderArray(array, path: path)
         case let number as NSNumber:
             renderNumber(number)
         default:
@@ -99,16 +105,17 @@ package final class TextRendererJSON {
         }
     }
 
-    private func render(json: Any, key: NetworkLogger.DecodingError.CodingKey, isFree: Bool) {
+    private func render(json: Any, key: NetworkLogger.DecodingError.CodingKey, path: String, isFree: Bool) {
         codingPath.append(key)
-        render(json: json, isFree: isFree)
+        render(json: json, path: path, isFree: isFree)
         codingPath.removeLast()
     }
 
-    private func renderObject(_ object: [String: Any]) {
-        let node = JSONContainerNode(kind: .object, json: object)
-        append("{", .punctuation, node)
-        newline()
+    private func renderObject(_ object: [String: Any], path: String) {
+        let node = renderToggleIndicator(path: path, kind: .object, json: object, openBracket: "{", closeBracket: "{ ... }")
+        guard node == nil || !collapsedPaths.contains(path) else { return }
+        
+        newline() 
         let keys = object.keys.sorted()
         for index in keys.indices {
             let key = keys[index]
@@ -117,7 +124,8 @@ package final class TextRendererJSON {
             append("\"\(key)\"", .key)
             append(": ", .punctuation)
             indentation += 1
-            render(json: object[key]!, key: .string(key), isFree: false)
+            let subPath = "\(path).\(key)"
+            render(json: object[key]!, key: .string(key), path: subPath, isFree: false)
             indentation -= 1
             if index < keys.endIndex - 1 {
                 append(",", .punctuation)
@@ -125,35 +133,47 @@ package final class TextRendererJSON {
             newline()
         }
         indent()
-        append("}", .punctuation, node)
+        append("}", .punctuation, nil)
     }
 
-    private func renderArray(_ array: [Any]) {
-        let node = JSONContainerNode(kind: .array, json: array)
-        if array is [String] || array is [Int] || array is [NSNumber] {
-            append("[", .punctuation, node)
-            for index in array.indices {
-                render(json: array[index], key: .int(index), isFree: true)
-                if index < array.endIndex - 1 {
-                    append(", ", .punctuation)
-                }
+    private func renderArray(_ array: [Any], path: String) {
+        let node = renderToggleIndicator(path: path, kind: .array, json: array, openBracket: "[", closeBracket: "[ ... ]")
+        guard node == nil || !collapsedPaths.contains(path) else { return }
+        
+        append("\n", .punctuation)
+        indentation += 1
+        for index in array.indices {
+            let subPath = "\(path)[\(index)]"
+            render(json: array[index], key: .int(index), path: subPath, isFree: true)
+            if index < array.endIndex - 1 {
+                append(",", .punctuation)
             }
-            append("]", .punctuation, node)
-        } else {
-            append("[", .punctuation, node)
-            append("\n", .punctuation)
-            indentation += 1
-            for index in array.indices {
-                render(json: array[index], key: .int(index), isFree: true)
-                if index < array.endIndex - 1 {
-                    append(",", .punctuation)
-                }
-                newline()
-            }
-            indentation -= 1
-            indent()
-            append("]", .punctuation, node)
+            newline()
         }
+        indentation -= 1
+        indent()
+        append("]", .punctuation, nil)
+    }
+    
+    private func renderToggleIndicator(path: String, kind: JSONContainerNode.Kind, json: Any, openBracket: String, closeBracket: String) -> JSONContainerNode? {
+        guard !nodesByPath.isEmpty else {
+            // Traditional rendering without collapse indicators
+            append(openBracket, .punctuation, nil)
+            return nil
+        }
+        
+        let node = nodesByPath[path] ?? JSONContainerNode(kind: kind, json: json, path: path)
+        let isCollapsed = collapsedPaths.contains(path)
+        
+        if isCollapsed {
+            append("▶ ", .punctuation, node)
+            append(closeBracket, .punctuation, nil)
+        } else {
+            append("▼ ", .punctuation, node)
+            append(openBracket, .punctuation, nil)
+        }
+        
+        return node
     }
 
     private func renderString(_ string: String) {
@@ -276,11 +296,11 @@ package final class JSONContainerNode {
 
     package let kind: Kind
     package let json: Any
-    package var isExpanded = true
-    package var expanded: NSAttributedString?
+    package let path: String?
 
-    package init(kind: Kind, json: Any) {
+    package init(kind: Kind, json: Any, path: String? = nil) {
         self.kind = kind
         self.json = json
+        self.path = path
     }
 }

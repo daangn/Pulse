@@ -16,6 +16,7 @@ final class FileViewerViewModel: ObservableObject {
     private let context: FileViewerViewModelContext
     var contentType: NetworkLogger.ContentType? { context.contentType }
     private let getData: () -> Data
+    private let settings = UserSettings.shared
 
     private(set) lazy var contents: Contents = render(data: getData())
 
@@ -27,6 +28,7 @@ final class FileViewerViewModel: ObservableObject {
 
     enum Contents {
         case image(ImagePreviewViewModel)
+        case json(JSONViewerViewModel)
         case other(RichTextViewModel)
 #if os(iOS) || os(macOS) || os(visionOS)
         case pdf(PDFDocument)
@@ -38,6 +40,13 @@ final class FileViewerViewModel: ObservableObject {
             return .image(ImagePreviewViewModel(image: image, data: data, context: context))
         } else if contentType?.isPDF ?? false, let pdf = makePDF(data: data) {
             return pdf
+        } else if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+            if settings.useCollapsibleJSONViewer {
+                return .json(JSONViewerViewModel(json: json, error: context.error, contentType: contentType))
+            } else {
+                let string = TextRenderer().render(json: json, error: context.error)
+                return .other(RichTextViewModel(string: string, contentType: contentType))
+            }
         } else {
             let string = TextRenderer().render(data, contentType: contentType, error: context.error)
             return .other(RichTextViewModel(string: string, contentType: contentType))

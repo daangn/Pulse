@@ -9,6 +9,7 @@ import Pulse
 
 public struct SettingsView: View {
     private let store: LoggerStore
+    @EnvironmentObject private var settings: UserSettings
 
     @State private var isShowingShareView = false
 
@@ -31,6 +32,9 @@ public struct SettingsView: View {
                         .foregroundColor(.secondary)
 #endif
                 }
+            }
+            Section("Display") {
+                Toggle("Collapsible JSON", isOn: $settings.useCollapsibleJSONViewer)
             }
             Section {
                 Button("Share Store") { isShowingShareView = true }

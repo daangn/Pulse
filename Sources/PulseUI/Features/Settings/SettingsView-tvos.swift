@@ -9,6 +9,7 @@ import Pulse
 
 public struct SettingsView: View {
     private let store: LoggerStore
+    @EnvironmentObject private var settings: UserSettings
 
     public init(store: LoggerStore = .shared) {
         self.store = store
@@ -20,11 +21,15 @@ public struct SettingsView: View {
                 store === RemoteLogger.shared.store {
                 RemoteLoggerSettingsView(viewModel: .shared)
             }
+            Section("Display") {
+                Toggle("Collapsible JSON Viewer", isOn: $settings.useCollapsibleJSONViewer)
+                Text("When enabled, JSON responses will be displayed with collapsible nodes")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
             Section {
-                if #available(tvOS 16, *) {
-                    NavigationLink(destination: StoreDetailsView(source: .store(store))) {
-                        Text("Store Info")
-                    }
+                NavigationLink(destination: StoreDetailsView(source: .store(store))) {
+                    Text("Store Info")
                 }
                 if !store.options.contains(.readonly) {
                     Button(role: .destructive, action: { store.removeAll() }) {

@@ -8,7 +8,6 @@ import SwiftUI
 import Pulse
 import UniformTypeIdentifiers
 
-@available(iOS 16, visionOS 1, *)
 public struct SettingsView: View {
     private let store: LoggerStore
     @State private var newHeaderName = ""
@@ -25,6 +24,12 @@ public struct SettingsView: View {
                store === RemoteLogger.shared.store {
                 RemoteLoggerSettingsView(viewModel: .shared)
             }
+            Section("Display") {
+                Toggle("Collapsible JSON Viewer", isOn: $settings.useCollapsibleJSONViewer)
+                Text("When enabled, JSON responses will be displayed with collapsible nodes")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
             Section("Other") {
                 NavigationLink(destination: StoreDetailsView(source: .store(store)), label: {
                     Text("Store Info")
@@ -37,7 +42,6 @@ public struct SettingsView: View {
 }
 
 #if DEBUG
-@available(iOS 16, visionOS 1, *)
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {

@@ -4,8 +4,8 @@ import PackageDescription
 let package = Package(
     name: "Pulse",
     platforms: [
-        .iOS(.v15),
-        .tvOS(.v15),
+        .iOS(.v16),
+        .tvOS(.v16),
         .macOS(.v13),
         .watchOS(.v9),
         .visionOS(.v1)
