@@ -1,8 +1,9 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2024 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2020-2026 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
+import PulseObjCHelpers
 
 extension LoggerStore {
     /// The store info.
@@ -79,7 +80,7 @@ enum AppInfo {
 }
 
 extension LoggerStore.Info.AppInfo {
-    static let current = LoggerStore.Info.AppInfo(
+    package static let current = LoggerStore.Info.AppInfo(
         bundleIdentifier: AppInfo.bundleIdentifier,
         name: AppInfo.appName,
         version: AppInfo.appVersion,
@@ -93,7 +94,9 @@ private func getAppIcon() -> Data? {
           let primaryIcons = icons["CFBundlePrimaryIcon"] as? [String: Any],
           let files = primaryIcons["CFBundleIconFiles"] as? [String],
           let lastIcon = files.last,
-          let image = PlatformImage(named: lastIcon),
+          // On iOS 26+, `UIImage(named:)` can raise `NSInternalInconsistencyException`
+          // ("Need an imageRef") for assets that can't be rasterized for the current trait.
+          let image = PulseObjCExceptionCatcher.attempt({ PlatformImage(named: lastIcon) }),
           let thumbnail = Graphics.resize(image, to: CGSize(width: 44, height: 44)) else { return nil }
     return Graphics.encode(thumbnail, compressionQuality: 0.9)
 }

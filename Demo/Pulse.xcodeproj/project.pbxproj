@@ -27,14 +27,20 @@
 		0C8FCB622C45F06300C4FD84 /* PulseUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0C8FCB612C45F06300C4FD84 /* PulseUI */; };
 		0C8FCB642C45F06900C4FD84 /* Pulse in Frameworks */ = {isa = PBXBuildFile; productRef = 0C8FCB632C45F06900C4FD84 /* Pulse */; };
 		0C8FCB662C45F06900C4FD84 /* PulseUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0C8FCB652C45F06900C4FD84 /* PulseUI */; };
-		0C8FCB6A2C45F12900C4FD84 /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8FCB682C45F12900C4FD84 /* MockStore.swift */; };
-		0C8FCB6E2C45F12900C4FD84 /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8FCB682C45F12900C4FD84 /* MockStore.swift */; };
-		0C8FCB6F2C45F12900C4FD84 /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8FCB682C45F12900C4FD84 /* MockStore.swift */; };
-		0C8FCB702C45F12900C4FD84 /* MockTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8FCB692C45F12900C4FD84 /* MockTask.swift */; };
-		0C8FCB742C45F12900C4FD84 /* MockTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8FCB692C45F12900C4FD84 /* MockTask.swift */; };
-		0C8FCB752C45F12900C4FD84 /* MockTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8FCB692C45F12900C4FD84 /* MockTask.swift */; };
 		0CA245732C85E87A00B432DA /* PulseProxy in Frameworks */ = {isa = PBXBuildFile; productRef = 0CA245722C85E87A00B432DA /* PulseProxy */; };
 		0CDACDE629EC6607007C15CD /* repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 0CDACDE129EC6607007C15CD /* repos.json */; };
+		0CF7DEC72F9550AB007D44C2 /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC42F9550AB007D44C2 /* MockStore.swift */; };
+		0CF7DEC82F9550AB007D44C2 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC52F9550AB007D44C2 /* Resources.swift */; };
+		0CF7DEC92F9550AB007D44C2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC22F9550AB007D44C2 /* Helpers.swift */; };
+		0CF7DECA2F9550AB007D44C2 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC32F9550AB007D44C2 /* MockDataTask.swift */; };
+		0CF7DECC2F9550AB007D44C2 /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC42F9550AB007D44C2 /* MockStore.swift */; };
+		0CF7DECD2F9550AB007D44C2 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC52F9550AB007D44C2 /* Resources.swift */; };
+		0CF7DECE2F9550AB007D44C2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC22F9550AB007D44C2 /* Helpers.swift */; };
+		0CF7DECF2F9550AB007D44C2 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC32F9550AB007D44C2 /* MockDataTask.swift */; };
+		0CF7DED12F9550AB007D44C2 /* MockStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC42F9550AB007D44C2 /* MockStore.swift */; };
+		0CF7DED22F9550AB007D44C2 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC52F9550AB007D44C2 /* Resources.swift */; };
+		0CF7DED32F9550AB007D44C2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC22F9550AB007D44C2 /* Helpers.swift */; };
+		0CF7DED42F9550AB007D44C2 /* MockDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF7DEC32F9550AB007D44C2 /* MockDataTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -95,14 +101,14 @@
 		0C70EA792A3F611C000B1071 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0C8CD5922A86F527003D116E /* Pulse-Demo-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pulse-Demo-iOS-Info.plist"; sourceTree = "<group>"; };
 		0C8CD5932A86F581003D116E /* Pulse-Demo-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pulse-Demo-macOS-Info.plist"; sourceTree = "<group>"; };
-		0C8FCB4A2C45F01E00C4FD84 /* PulseCore.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = PulseCore.podspec; path = ../PulseCore.podspec; sourceTree = "<group>"; };
-		0C8FCB4B2C45F01E00C4FD84 /* PulseUI.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = PulseUI.podspec; path = ../PulseUI.podspec; sourceTree = "<group>"; };
 		0C8FCB4C2C45F01E00C4FD84 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		0C8FCB4D2C45F01E00C4FD84 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 		0C8FCB4E2C45F03500C4FD84 /* Pulse */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Pulse; path = ..; sourceTree = "<group>"; };
-		0C8FCB682C45F12900C4FD84 /* MockStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockStore.swift; sourceTree = "<group>"; };
-		0C8FCB692C45F12900C4FD84 /* MockTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockTask.swift; sourceTree = "<group>"; };
 		0CDACDE129EC6607007C15CD /* repos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = repos.json; sourceTree = "<group>"; };
+		0CF7DEC22F9550AB007D44C2 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		0CF7DEC32F9550AB007D44C2 /* MockDataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDataTask.swift; sourceTree = "<group>"; };
+		0CF7DEC42F9550AB007D44C2 /* MockStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStore.swift; sourceTree = "<group>"; };
+		0CF7DEC52F9550AB007D44C2 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		49E82A8526D107A00070244F /* AlamofireIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireIntegration.swift; sourceTree = "<group>"; };
 		49E82A8826D1083D0070244F /* MoyaIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaIntegration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -184,8 +190,8 @@
 				0C70EA742A3F611B000B1071 /* iOS */,
 				0C30B2F42A3F375400D65F8F /* iOS-paired */,
 				0C6460D525F579B8002C55B1 /* tvOS */,
+				0CF7DEC62F9550AB007D44C2 /* Shared */,
 				0C0B31EB26D179A20045C9E1 /* Integrations */,
-				0C8FCB672C45F0A800C4FD84 /* Shared */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -195,8 +201,6 @@
 			children = (
 				0C8FCB4E2C45F03500C4FD84 /* Pulse */,
 				0C8FCB4D2C45F01E00C4FD84 /* CHANGELOG.md */,
-				0C8FCB4A2C45F01E00C4FD84 /* PulseCore.podspec */,
-				0C8FCB4B2C45F01E00C4FD84 /* PulseUI.podspec */,
 				0C8FCB4C2C45F01E00C4FD84 /* README.md */,
 				0C516FBB26015DD2004813B4 /* Sources */,
 				0C57AD4E245F0EFB005B3400 /* Products */,
@@ -250,21 +254,23 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
-		0C8FCB672C45F0A800C4FD84 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				0C8FCB682C45F12900C4FD84 /* MockStore.swift */,
-				0C8FCB692C45F12900C4FD84 /* MockTask.swift */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		0CDACDE029EC65F4007C15CD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				0CDACDE129EC6607007C15CD /* repos.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		0CF7DEC62F9550AB007D44C2 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				0CF7DEC22F9550AB007D44C2 /* Helpers.swift */,
+				0CF7DEC32F9550AB007D44C2 /* MockDataTask.swift */,
+				0CF7DEC42F9550AB007D44C2 /* MockStore.swift */,
+				0CF7DEC52F9550AB007D44C2 /* Resources.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -419,11 +425,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C0B31F126D179A20045C9E1 /* ViewController.swift in Sources */,
+				0CF7DEC72F9550AB007D44C2 /* MockStore.swift in Sources */,
+				0CF7DEC82F9550AB007D44C2 /* Resources.swift in Sources */,
+				0CF7DEC92F9550AB007D44C2 /* Helpers.swift in Sources */,
+				0CF7DECA2F9550AB007D44C2 /* MockDataTask.swift in Sources */,
 				0C0B31ED26D179A20045C9E1 /* AppDelegate.swift in Sources */,
 				0C0B31EF26D179A20045C9E1 /* SceneDelegate.swift in Sources */,
 				0C57511A2B01BA40001074E5 /* DebugAnalyticsView.swift in Sources */,
-				0C8FCB752C45F12900C4FD84 /* MockTask.swift in Sources */,
-				0C8FCB6F2C45F12900C4FD84 /* MockStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,10 +439,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CF7DED12F9550AB007D44C2 /* MockStore.swift in Sources */,
+				0CF7DED22F9550AB007D44C2 /* Resources.swift in Sources */,
+				0CF7DED32F9550AB007D44C2 /* Helpers.swift in Sources */,
+				0CF7DED42F9550AB007D44C2 /* MockDataTask.swift in Sources */,
 				0C6460DF25F579B8002C55B1 /* ContentView.swift in Sources */,
 				0C6460DC25F579B8002C55B1 /* Pulse_tvOSApp.swift in Sources */,
-				0C8FCB742C45F12900C4FD84 /* MockTask.swift in Sources */,
-				0C8FCB6E2C45F12900C4FD84 /* MockStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,9 +452,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CF7DECC2F9550AB007D44C2 /* MockStore.swift in Sources */,
+				0CF7DECD2F9550AB007D44C2 /* Resources.swift in Sources */,
+				0CF7DECE2F9550AB007D44C2 /* Helpers.swift in Sources */,
+				0CF7DECF2F9550AB007D44C2 /* MockDataTask.swift in Sources */,
 				0C70EA762A3F611B000B1071 /* Pulse_Demo_iOSApp.swift in Sources */,
-				0C8FCB702C45F12900C4FD84 /* MockTask.swift in Sources */,
-				0C8FCB6A2C45F12900C4FD84 /* MockStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,7 +521,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.kean.pulse-integration-examples";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PULSE_MOCK_INCLUDED;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = STANDALONE_PULSE_APP;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -665,7 +677,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PULSE_MOCK_INCLUDED;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = STANDALONE_PULSE_APP;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
@@ -752,7 +764,7 @@
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator watchos watchsimulator xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PULSE_MOCK_INCLUDED;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = STANDALONE_PULSE_APP;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";

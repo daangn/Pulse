@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2024 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2020-2026 Alexander Grebenyuk (github.com/kean).
 
 import Pulse
 import Foundation
@@ -47,10 +47,16 @@ extension NetworkTaskEntity {
 
     /// - returns `nil` if the task is an unknown state. It may happen if the
     /// task is pending, but it's from the previous app run.
-    package func state(in store: LoggerStore?) -> NetworkTaskEntity.State? {
+    package func state(in store: LoggerStoreProtocol?) -> NetworkTaskEntity.State? {
         let state = self.state
-        if state == .pending, let store, self.session != store.session.id {
-            return nil
+        if state == .pending, let sessionID = store?.currentSessionID {
+            // Read via KVC so a NULL stored value (allowed by Core Data because
+            // `session` is implicitly optional in the model) is surfaced as
+            // `nil` instead of trapping the ObjC->Swift UUID bridge.
+            let taskSession = value(forKey: "session") as? UUID
+            if taskSession != sessionID {
+                return nil
+            }
         }
         return state
     }

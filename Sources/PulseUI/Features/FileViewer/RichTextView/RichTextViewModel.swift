@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2024 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2020-2026 Alexander Grebenyuk (github.com/kean).
 
 import SwiftUI
 import Pulse
@@ -8,7 +8,7 @@ import Combine
 
 #if os(iOS) || os(visionOS)
 
-final class RichTextViewModel: ObservableObject {
+public final class RichTextViewModel: ObservableObject {
     // Search
     @Published var searchOptions: StringSearchOptions = .default
     @Published private(set) var selectedMatchIndex: Int = 0
@@ -16,15 +16,15 @@ final class RichTextViewModel: ObservableObject {
     @Published var searchTerm: String = ""
 
     // Configuration
-    @Published var isLinkDetectionEnabled = true
+    @Published public var isLinkDetectionEnabled = true
     var isToolbarHidden = false
 
-    let contentType: NetworkLogger.ContentType?
-    let originalText: NSAttributedString
+    public let contentType: NetworkLogger.ContentType?
+    public let originalText: NSAttributedString
 
-    var onLinkTapped: ((URL) -> Bool)?
+    public var onLinkTapped: ((URL) -> Bool)?
 
-    var isEmpty: Bool { originalText.length == 0 }
+    public var isEmpty: Bool { originalText.length == 0 }
 
     weak var textView: UXTextView? // Not proper MVVM
     var textStorage: NSTextStorage { textView?.textStorage ?? NSTextStorage(string: "") }
@@ -41,17 +41,17 @@ final class RichTextViewModel: ObservableObject {
         let originalBackgroundColor: UXColor?
     }
 
-    convenience init(string: NSAttributedString = NSAttributedString()) {
+    public convenience init(string: NSAttributedString = NSAttributedString()) {
         self.init(string: string, contentType: nil)
     }
 
-    init(string: NSAttributedString, contentType: NetworkLogger.ContentType?) {
+    public init(string: NSAttributedString, contentType: NetworkLogger.ContentType?) {
         self.originalText = string
         self.contentType = contentType
 
         Publishers.CombineLatest($searchTerm, $searchOptions)
             .dropFirst()
-            .receive(on: DispatchQueue.main) // Make sure self returns new values
+            .debounce(for: .milliseconds(200), scheduler: DispatchQueue.main)
             .sink { [weak self] _, _ in
                 self?.setSearchNeeded()
             }.store(in: &cancellables)
@@ -61,11 +61,10 @@ final class RichTextViewModel: ObservableObject {
         guard let context = context else { return }
 
         // Not updated self.searchTerm because searchable doesn't like that
-        let matches = search(searchTerm: context.searchTerm.text, in: textStorage.string as NSString, options: context.searchTerm.options)
+        let matches = search(searchTerm: context.searchTerm.text, in: originalText, options: context.searchTerm.options)
         didUpdateMatches(matches, string: textStorage)
         if context.matchIndex < matches.count {
             DispatchQueue.main.async {
-                self.textView?.layoutManager.allowsNonContiguousLayout = false // Remove this workaround
                 UIView.performWithoutAnimation {
                     self.updateMatchIndex(context.matchIndex)
                 }
@@ -97,16 +96,17 @@ final class RichTextViewModel: ObservableObject {
 
         let string = textStorage
         let (searchTerm, options) = (searchTerm, searchOptions)
+        let originalText = self.originalText
 
         queue.async {
-            let matches = search(searchTerm: searchTerm, in: string.string as NSString, options: options)
+            let matches = search(searchTerm: searchTerm, in: originalText, options: options)
             DispatchQueue.main.async {
                 self.didUpdateMatches(matches, string: string)
             }
         }
     }
 
-    private func didUpdateMatches(_ newMatches: [NSRange], string: NSAttributedString) {
+    private func didUpdateMatches(_ newMatches: [SearchMatch], string: NSAttributedString) {
         performUpdates { _ in
             clearMatches()
 
@@ -114,14 +114,7 @@ final class RichTextViewModel: ObservableObject {
                 textStorage.setAttributedString(string)
             }
 
-            matches = newMatches.filter {
-                textStorage.attributes(at: $0.location, effectiveRange: nil)[.isTechnical] == nil
-            }.map {
-                let color = textStorage.attribute(.foregroundColor, at: $0.location, effectiveRange: nil) as? UXColor
-                let backgroundColor = textStorage.attribute(.backgroundColor, at: $0.location, effectiveRange: nil) as? UXColor
-
-                return SearchMatch(range: $0, originalForegroundColor: color ?? .label, originalBackgroundColor: backgroundColor)
-            }
+            matches = newMatches
 
             for match in matches {
                 highlight(range: match.range)
@@ -153,25 +146,20 @@ final class RichTextViewModel: ObservableObject {
     private func didUpdateCurrentSelectedMatch(previousMatch: Int? = nil) {
         guard !matches.isEmpty else { return }
 
-        // Scroll to visible range
-        // Make sure it's somewhere in the middle (find newlines)
+        // Scroll to a slightly extended range so the match isn't pinned to the
+        // top edge. Use native newline search instead of a per-character loop.
         var range = matches[selectedMatchIndex].range
-        var index = range.upperBound
-        var newlines = 0
         let string = textStorage.string as NSString
-        while index < textStorage.length {
-            if let character = Character(string.character(at: index)), character.isNewline {
-                newlines += 1
-                range.length += index - range.upperBound
-                if newlines == 8 {
-                    break
-                }
-            }
-            index += 1
+        var searchStart = range.upperBound
+        for _ in 0..<8 {
+            guard searchStart < string.length else { break }
+            let found = string.range(of: "\n", options: [], range: NSRange(location: searchStart, length: string.length - searchStart))
+            if found.location == NSNotFound { break }
+            range.length = found.location - range.location
+            searchStart = found.upperBound
         }
-        if let textView = textView {
-            textView.scrollRangeToVisible(range)
-        }
+        textView?.scrollRangeToVisible(range)
+
         // Update highlights
         if let previousMatch = previousMatch {
             highlight(range: matches[previousMatch].range)
@@ -198,11 +186,26 @@ final class RichTextViewModel: ObservableObject {
     }
 }
 
-private func search(searchTerm: String, in string: NSString, options: StringSearchOptions) -> [NSRange] {
+/// Runs on a background queue. We resolve match metadata (technical-attribute filter
+/// and the original colors used by `clearMatches`) from the immutable `originalText`
+/// here, so the main-thread work in `didUpdateMatches` is just applying highlights.
+private func search(searchTerm: String, in originalText: NSAttributedString, options: StringSearchOptions) -> [RichTextViewModel.SearchMatch] {
     guard searchTerm.count >= 1 else {
         return []
     }
-    return string.ranges(of: searchTerm, options: options)
+    let ranges = (originalText.string as NSString).ranges(of: searchTerm, options: options)
+    return ranges.compactMap { range -> RichTextViewModel.SearchMatch? in
+        guard range.location < originalText.length else { return nil }
+        let attributes = originalText.attributes(at: range.location, effectiveRange: nil)
+        guard attributes[.isTechnical] == nil else { return nil }
+        let foreground = attributes[.foregroundColor] as? UXColor
+        let background = attributes[.backgroundColor] as? UXColor
+        return RichTextViewModel.SearchMatch(
+            range: range,
+            originalForegroundColor: foreground ?? .label,
+            originalBackgroundColor: background
+        )
+    }
 }
 
 #endif
@@ -229,19 +232,19 @@ package struct TextViewSearchContext {
 }
 
 #if os(watchOS) || os(tvOS) || os(macOS)
-final class RichTextViewModel: ObservableObject {
-    let text: String
-    let attributedString: AttributedString?
+public final class RichTextViewModel: ObservableObject {
+    public let text: String
+    public let attributedString: AttributedString?
 
-    var isLinkDetectionEnabled = true
-    var isEmpty: Bool { text.isEmpty }
+    public var isLinkDetectionEnabled = true
+    public var isEmpty: Bool { text.isEmpty }
 
-    init(string: String) {
+    public init(string: String) {
         self.text = string
         self.attributedString = nil
     }
 
-    init(string: NSAttributedString, contentType: NetworkLogger.ContentType? = nil) {
+    public init(string: NSAttributedString, contentType: NetworkLogger.ContentType? = nil) {
 #if os(macOS)
         self.attributedString = try? AttributedString(string, including: \.appKit)
 #else

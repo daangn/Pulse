@@ -1,10 +1,10 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2024 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2020-2026 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 
-public protocol URLSessionProtocol {
+public protocol URLSessionProtocol: Sendable {
     // MARK: - Core
 
     func dataTask(with request: URLRequest) -> URLSessionDataTask

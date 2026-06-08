@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2024 Alexander Grebenyuk (github.com/kean).
+// Copyright (c) 2020-2026 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
 
@@ -28,7 +28,7 @@ public final class URLSessionProxy: URLSessionProtocol, @unchecked Sendable {
         logger: NetworkLogger? = nil,
         options: Options = .init()
     ) {
-        self.init(configuration: configuration, delegate: nil, delegateQueue: nil, options: options)
+        self.init(configuration: configuration, delegate: nil, delegateQueue: nil, logger: logger, options: options)
     }
 
     /// - parameter logger: A custom logger to use instead of ``NetworkLogger/shared``.
