@@ -51,7 +51,7 @@ struct WrappedTextView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UXTextView {
         // Disables the new TextKit 2 which is extremely slow on iOS 16
-        let textView = UITextView(usingTextLayoutManager: false)
+        let textView = SelectableTextView(usingTextLayoutManager: false)
         configureTextView(textView)
         textView.delegate = context.coordinator
         textView.attributedText = viewModel.originalText
@@ -67,6 +67,33 @@ struct WrappedTextView: UIViewRepresentable {
         let coordinator = Coordinator()
         coordinator.onLinkTapped = viewModel.onLinkTapped
         return coordinator
+    }
+}
+
+// iOS suppresses the text edit menu (copy, look up, …) when the hosting window
+// has an elevated `windowLevel` — e.g. when the console is hosted in FLEX's
+// explorer window. Text selection works but the menu never appears.
+//
+// While text is selected, temporarily drop the window to the normal level so the
+// menu can present, then restore it. In a normal-level window this is a no-op.
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
+private final class SelectableTextView: UITextView {
+    private var elevatedWindowLevel: UIWindow.Level?
+
+    override func becomeFirstResponder() -> Bool {
+        if let window, window.windowLevel > .normal {
+            elevatedWindowLevel = window.windowLevel
+            window.windowLevel = .normal
+        }
+        return super.becomeFirstResponder()
+    }
+
+    override func resignFirstResponder() -> Bool {
+        if let elevatedWindowLevel {
+            window?.windowLevel = elevatedWindowLevel
+            self.elevatedWindowLevel = nil
+        }
+        return super.resignFirstResponder()
     }
 }
 
