@@ -6,7 +6,7 @@ import SwiftUI
 import Network
 import Pulse
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct RemoteLoggerSelectedDeviceView: View {
     @ObservedObject var logger: RemoteLogger = .shared
 

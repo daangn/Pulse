@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Pulse
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("Type Mismatch (Object)") {
     fileViewer(error: typeMismatchError())
 }
@@ -33,7 +33,7 @@ import Pulse
 
 @ViewBuilder
 private func fileViewer(error: NetworkLogger.DecodingError) -> some View {
-    if #available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *) {
+    if #available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *) {
         let viewer = FileViewer(viewModel: .init(title: "Response", context: .init(contentType: .init(rawValue: "application/json"), originalSize: 1200, error: error), data: { MockJSON.allPossibleValues }))
         NavigationView {
             viewer

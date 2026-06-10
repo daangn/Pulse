@@ -13,7 +13,7 @@ final class ConsoleSearchBarViewModel: ObservableObject {
     @Published var text: String = ""
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 final class ConsoleSearchViewModel: ObservableObject, ConsoleSearchSessionDelegate {
     @Published var isSearching: Bool = false {
         didSet {
@@ -442,10 +442,10 @@ final class ConsoleSearchViewModel: ObservableObject, ConsoleSearchSessionDelega
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 extension ConsoleSearchViewModel: ConsoleSearchOptionsHost {}
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ConsoleSearchResultViewModel: Identifiable {
     package var id: ConsoleSearchResultKey { ConsoleSearchResultKey(id: entity.objectID) }
     package let entity: NSManagedObject

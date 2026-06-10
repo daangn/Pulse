@@ -7,7 +7,7 @@
 import SwiftUI
 import Pulse
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleRecentFiltersListView: View {
     @ObservedObject var store: ConsoleRecentFiltersStore
     let mode: ConsoleMode
@@ -37,8 +37,8 @@ struct ConsoleRecentFiltersListView: View {
     @ViewBuilder
     private var content: some View {
         if store.recents.isEmpty {
-            ContentUnavailableView(
-                "No Recent Filters",
+            PulseContentUnavailableView(
+                title: "No Recent Filters",
                 systemImage: "line.3.horizontal.decrease.circle",
                 description: Text("Filters you apply in the console will appear here.")
             )

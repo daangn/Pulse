@@ -184,7 +184,7 @@ package final class TimingRowViewModel: Identifiable {
 }
 
 #if DEBUG
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview(traits: .sizeThatFitsLayout) {
     ScrollView {
         TimingView(viewModel: .init(sections: mockSections))

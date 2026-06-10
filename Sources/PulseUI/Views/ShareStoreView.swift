@@ -9,7 +9,7 @@ import CoreData
 import Pulse
 import Combine
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ShareStoreView: View {
     /// Preselected sessions.
     var sessions: Set<UUID> = []
@@ -160,7 +160,7 @@ package struct ShareStoreView: View {
 }
 
 #if DEBUG
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview {
 #if os(iOS) || os(visionOS)
     NavigationView {

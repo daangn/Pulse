@@ -9,7 +9,7 @@ import Pulse
 import CoreData
 import Combine
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ConsoleSearchSuggestionsViewModel {
     package let searches: [ConsoleSearchSuggestion]
     package let filters: [ConsoleSearchSuggestion]
@@ -35,7 +35,7 @@ package struct ConsoleSearchSuggestionsContext {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package final class ConsoleNetworkSearchSuggestionsService {
     package let recents: ConsoleSearchRecentSearchesStore
     package let mode: ConsoleMode
@@ -93,7 +93,7 @@ package final class ConsoleNetworkSearchSuggestionsService {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ConsoleSearchSuggestion: Identifiable {
     package let id = UUID()
     package var action: Action

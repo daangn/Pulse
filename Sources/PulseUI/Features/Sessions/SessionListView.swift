@@ -10,7 +10,7 @@ import Combine
 
 #if os(iOS) || os(visionOS) || os(watchOS) || os(tvOS)
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct SessionListView: View {
     @Binding var selection: Set<UUID>
     @Binding var sharedSessions: SelectedSessionsIDs?
@@ -38,7 +38,7 @@ struct SessionListView: View {
             } else {
                 list
                     .onAppear { refresh() }
-                    .onChange(of: sessions.count) { refresh() }
+                    .onChange(of: sessions.count) { _ in refresh() }
                     .task {
                         while !Task.isCancelled {
                             try? await Task.sleep(for: .seconds(3))

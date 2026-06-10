@@ -9,7 +9,7 @@ import Combine
 
 #if os(iOS) || os(visionOS)
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleSearchResultView: View {
     let viewModel: ConsoleSearchResultViewModel
 
@@ -96,7 +96,7 @@ struct ConsoleSearchResultView: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 private func makeMatches(from occurrences: [ConsoleSearchOccurrence]) -> [ConsoleSearchResultsItem] {
     var items: [ConsoleSearchResultsItem] = []
     var index = 0
@@ -122,7 +122,7 @@ private func makeMatches(from occurrences: [ConsoleSearchOccurrence]) -> [Consol
     return items
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleSearchResultsItem: Identifiable {
     var id: ConsoleSearchOccurrence { occurrence }
     let totalCount: Int
@@ -146,7 +146,7 @@ struct ConsoleSearchResultsItem: Identifiable {
 
 #if os(iOS) || os(visionOS) || os(macOS)
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct PlainListGroupSeparator: View {
     package init() {}
 
@@ -159,7 +159,7 @@ package struct PlainListGroupSeparator: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct PlainListSectionHeader<Content: View>: View {
     package var title: String?
     @ViewBuilder package let content: () -> Content
@@ -192,7 +192,7 @@ package struct PlainListSectionHeader<Content: View>: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 extension PlainListSectionHeader where Content == Text {
     init(title: String) {
         self.init(title: title, content: { Text(title) })

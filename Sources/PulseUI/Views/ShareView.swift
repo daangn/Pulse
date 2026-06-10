@@ -103,7 +103,7 @@ package struct ShareView: View {
 #endif
 
 #if os(macOS)
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ShareNetworkTaskView: View {
     @ObservedObject var task: NetworkTaskEntity
 
@@ -172,7 +172,7 @@ package struct ShareNetworkTaskView: View {
 }
 
 #if DEBUG
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview {
     ShareNetworkTaskView(task: LoggerStore.demo.entity(for: .login))
         .frame(height: 400)

@@ -18,14 +18,14 @@ public struct ConsoleView: View {
     }
 
     public var body: some View {
-        if #available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *) {
+        if #available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *) {
             contents
         } else {
-            PlaceholderView(imageName: "xmark.octagon", title: "Unsupported", subtitle: "Pulse requires iOS 18 or later").padding()
+            PlaceholderView(imageName: "xmark.octagon", title: "Unsupported", subtitle: "Pulse requires iOS 16 or later").padding()
         }
     }
 
-    @available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+    @available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
     private var contents: some View {
         List {
             ConsoleToolbarView(environment: environment)
@@ -89,7 +89,7 @@ private struct ConsoleToolbarView: View {
 }
 
 #if DEBUG
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview {
     NavigationView {
         ConsoleView(store: .mock)

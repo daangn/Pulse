@@ -139,7 +139,7 @@ package enum TextRole {
     case title
     /// Section headline (small).
     ///
-    /// Font size: iOS 12, macOS 10, tvOS 21, watchOS 11
+    /// Font size: iOS 12, macOS 10, tvOS 21, watchOS 9
     case subheadline
     /// Regular-sized body.
     ///

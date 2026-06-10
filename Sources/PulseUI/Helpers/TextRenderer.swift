@@ -421,36 +421,36 @@ extension NSAttributedString.Key {
 #if DEBUG && !os(macOS)
 private let _previewTask = LoggerStore.preview.entity(for: .login)
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("Task") {
     RichTextView(viewModel: .init(string: TextRenderer(options: .sharing).make {
         $0.render(_previewTask, content: .sharing, store: LoggerStore.mock)
     }))
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("Task (Share)") {
     RichTextView(viewModel: .init(string: TextRenderer(options: .sharing).make { $0.render(_previewTask, content: .sharing, store: LoggerStore.mock) }))
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("Task (Color)") {
     RichTextView(viewModel: .init(string: TextRenderer(options: .init(color: .full)).make {
         $0.render(_previewTask, content: .all, store: LoggerStore.mock)
     }))
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("Task (Plain)") {
     RichTextView(viewModel: .init(string: NSAttributedString(string: ShareStoreTask(entities: try! LoggerStore.mock.messages(), store: .mock, output: .plainText, completion: { _ in }).share().items[0] as! String)))
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("Transaction") {
     RichTextView(viewModel: .init(string: TextRenderer(options: .sharing).make { $0.render(_previewTask.orderedTransactions[0]) }))
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("HTML (Raw)", traits: .fixedLayout(width: 1160, height: 2000)) {
     let html = try! TextUtilities.html(from: TextRenderer(options: .sharing).make {
         $0.render(_previewTask, content: .sharing, store: LoggerStore.mock)
@@ -459,7 +459,7 @@ private let _previewTask = LoggerStore.preview.entity(for: .login)
 }
 
 #if os(iOS)
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("HTML") {
     let html = try! TextUtilities.html(from: TextRenderer(options: .sharing).make {
         $0.render(_previewTask, content: .sharing, store: LoggerStore.mock)
@@ -468,7 +468,7 @@ private let _previewTask = LoggerStore.preview.entity(for: .login)
         .edgesIgnoringSafeArea([.bottom])
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("PDF") {
     let string = TextRenderer(options: .sharing).make {
         $0.render(_previewTask, content: .sharing, store: LoggerStore.mock)

@@ -10,7 +10,7 @@ import Pulse
 /// Abstracts the search options + scopes surface so that the same sheet can be
 /// driven by either `ConsoleSearchViewModel` or `Rift_ConsoleSearchViewModel`.
 @MainActor
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package protocol ConsoleSearchOptionsHost: ObservableObject {
     var options: StringSearchOptions { get set }
     var scopes: Set<ConsoleSearchScope> { get set }
@@ -26,7 +26,7 @@ package protocol ConsoleSearchOptionsHost: ObservableObject {
 
 #if os(iOS) || os(visionOS)
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ConsoleSearchOptionsSheet<ViewModel: ConsoleSearchOptionsHost>: View {
     @ObservedObject var viewModel: ViewModel
     @Environment(\.dismiss) private var dismiss

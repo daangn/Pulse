@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ToolbarPill<Content: View>: View {
     private let isActive: Bool
     private let activeColor: Color
@@ -27,7 +27,7 @@ package struct ToolbarPill<Content: View>: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 extension View {
     /// Applies the standard toolbar pill background and corner clip.
     func toolbarPillBackground(isActive: Bool, activeColor: Color = .accentColor) -> some View {
@@ -41,7 +41,7 @@ extension View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 extension ToolbarPill where Content == ToolbarPillLabel {
     package init(_ title: String? = nil, systemImage: String? = nil, isActive: Bool) {
         self.init(isActive: isActive) {
@@ -50,7 +50,7 @@ extension ToolbarPill where Content == ToolbarPillLabel {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ToolbarPillLabel: View {
     private let title: String?
     private let systemImage: String?
@@ -67,7 +67,7 @@ package struct ToolbarPillLabel: View {
             if let systemImage {
                 Image(systemName: systemImage)
                     .font((title == nil ? Font.footnote : Font.caption).weight(.bold))
-                    .contentTransition(.symbolEffect(.replace))
+                    .pulseSymbolReplaceTransition()
             }
             if let title {
                 Text(title)

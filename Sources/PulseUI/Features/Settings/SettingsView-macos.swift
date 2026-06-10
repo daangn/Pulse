@@ -18,7 +18,7 @@ struct SettingsView: View {
     var body: some View {
         List {
             if !UserSettings.shared.isRemoteLoggingHidden {
-                if #available(macOS 15, *), store === RemoteLogger.shared.store {
+                if #available(macOS 13, *), store === RemoteLogger.shared.store {
                     RemoteLoggerSettingsView(viewModel: .shared)
                 } else {
                     Text("Not available")

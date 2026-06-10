@@ -10,7 +10,7 @@ import Combine
 import CoreData
 
 package enum ContextMenu {
-    @available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+    @available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
     package struct MessageContextMenu: View {
         package let message: LoggerMessageEntity
 
@@ -260,7 +260,7 @@ package struct StringSearchOptionsMenu: View {
 }
 
 #if os(iOS) || os(visionOS)
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct OpenOnMacOverlay: View {
     let entity: NSManagedObject
     @ObservedObject var logger: RemoteLogger = .shared

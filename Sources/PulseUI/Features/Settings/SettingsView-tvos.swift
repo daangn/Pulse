@@ -16,7 +16,7 @@ public struct SettingsView: View {
 
     public var body: some View {
         Form {
-            if #available(tvOS 18, *),
+            if #available(tvOS 16, *),
                 !UserSettings.shared.isRemoteLoggingHidden,
                 store === RemoteLogger.shared.store {
                 RemoteLoggerSettingsView(viewModel: .shared)

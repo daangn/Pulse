@@ -7,7 +7,7 @@
 import SwiftUI
 import Combine
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct WrappedTextView: UIViewRepresentable {
     let viewModel: RichTextViewModel
 
@@ -17,6 +17,7 @@ struct WrappedTextView: UIViewRepresentable {
         var onLinkTapped: ((URL) -> Bool)?
         var cancellables: [AnyCancellable] = []
 
+        @available(iOS 17, *)
         func textView(_ textView: UITextView, primaryActionFor textItem: UITextItem, defaultAction: UIAction) -> UIAction? {
             guard case .link(let URL) = textItem.content else { return defaultAction }
             if let onLinkTapped = onLinkTapped, onLinkTapped(URL) {

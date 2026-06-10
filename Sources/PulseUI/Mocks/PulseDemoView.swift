@@ -18,7 +18,7 @@ import Pulse
 ///
 /// Additional variants (e.g. a sessions-only view, a search harness, or a
 /// network-only console) can be added here as needed.
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 public struct PulseDemoView: View {
     public init() {}
 

@@ -21,13 +21,13 @@ package final class ConsoleRouter: ObservableObject {
 }
 
 #if os(macOS)
-@available(macOS 15, *)
+@available(macOS 13, *)
 package enum ConsoleSelectedItem: Hashable {
     case entity(NSManagedObjectID)
     case occurrence(NSManagedObjectID, ConsoleSearchOccurrence)
 }
 
-@available(macOS 15, *)
+@available(macOS 13, *)
 extension ConsoleRouter {
     // Selection for macOS split-view navigation
     package var selection: ConsoleSelectedItem? {
@@ -42,14 +42,14 @@ struct ConsoleRouterView: View {
     @ObservedObject var router: ConsoleRouter
 
     var body: some View {
-        if #available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *) {
+        if #available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *) {
             contents
         }
     }
 }
 
 #if os(iOS) || os(visionOS)
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 extension ConsoleRouterView {
     var contents: some View {
         Text("").invisible()
@@ -115,7 +115,7 @@ extension ConsoleRouterView {
 
 #elseif os(watchOS)
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 extension ConsoleRouterView {
     var contents: some View {
         Text("").invisible()
@@ -177,7 +177,7 @@ extension ConsoleRouterView {
 
 #elseif os(tvOS)
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 extension ConsoleRouterView {
     var contents: some View {
         Text("").invisible()
@@ -201,7 +201,7 @@ extension ConsoleRouterView {
 
 #else
 
-@available(macOS 15, *)
+@available(macOS 13, *)
 extension ConsoleRouterView {
     var contents: some View {
         Text("").invisible()

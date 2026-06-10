@@ -162,7 +162,7 @@ enum StoreDetailsViewSource {
 private let dateFormatter = DateFormatter(dateStyle: .medium, timeStyle: .medium)
 
 #if DEBUG
-@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview {
     StoreDetailsView(source: .store(LoggerStore.mock))
         .frame(width: 280)

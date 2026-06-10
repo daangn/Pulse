@@ -9,7 +9,7 @@ import Pulse
 import CoreData
 import Combine
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleSearchDynamicSuggestionsListView: View {
     @EnvironmentObject private var viewModel: ConsoleSearchViewModel
     @State private var isShowingAllRecents = false
@@ -64,7 +64,7 @@ struct ConsoleSearchDynamicSuggestionsListView: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 private struct ConsoleSearchRecentSearchesView: View {
     @EnvironmentObject private var viewModel: ConsoleSearchViewModel
     @Environment(\.dismiss) private var dismiss
@@ -93,8 +93,8 @@ private struct ConsoleSearchRecentSearchesView: View {
     private var content: some View {
         let searches = viewModel.recentSearches
         if searches.isEmpty {
-            ContentUnavailableView(
-                "No Recent Searches",
+            PulseContentUnavailableView(
+                title: "No Recent Searches",
                 systemImage: "magnifyingglass",
                 description: Text("Searches you perform will appear here.")
             )
@@ -151,7 +151,7 @@ private struct ConsoleSearchRecentSearchesView: View {
 }
 
 #if DEBUG
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview {
     let environment = ConsoleEnvironment(store: LoggerStore.mock)
     List {

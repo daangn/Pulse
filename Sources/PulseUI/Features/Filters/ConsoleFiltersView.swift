@@ -6,7 +6,7 @@ import SwiftUI
 import Pulse
 import Combine
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ConsoleFiltersView: View {
     @EnvironmentObject var viewModel: ConsoleFiltersViewModel
     @EnvironmentObject private var environment: ConsoleEnvironment
@@ -100,7 +100,7 @@ package struct ConsoleFiltersView: View {
 
 // MARK: - ConsoleFiltersView (Sections)
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 extension ConsoleFiltersView {
 #if os(iOS) || os(macOS) || os(visionOS)
     var timePeriodSection: some View {
@@ -209,7 +209,7 @@ extension ConsoleFiltersView {
 #if DEBUG
 import CoreData
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("Messages", traits: .fixedLayout(width: 280, height: 900)) {
     let store = LoggerStore.mock
     let entities: [NSManagedObject] = try! store.messages()
@@ -231,7 +231,7 @@ import CoreData
 #endif
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 17, tvOS 17, macOS 14, watchOS 10, visionOS 1, *)
 #Preview("Network", traits: .fixedLayout(width: 280, height: 900)) {
     let store = LoggerStore.mock
     let entities: [NSManagedObject] = try! store.tasks()

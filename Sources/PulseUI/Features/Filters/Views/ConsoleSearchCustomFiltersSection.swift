@@ -5,7 +5,7 @@
 import SwiftUI
 import Pulse
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleSearchCustomFiltersSection: View {
     @Binding var filters: [ConsoleCustomFilter]
     var fieldGroups: [ConsoleCustomFilter.FieldGroup]
@@ -160,7 +160,7 @@ struct ConsoleFilterLogicalOperatorPicker: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleCustomFilterSummaryView: View {
     let field: String
     let match: String
@@ -174,18 +174,18 @@ struct ConsoleCustomFilterSummaryView: View {
             Text(match.lowercased())
                 .foregroundStyle(.secondary)
             Text("\u{201C}")
-                .foregroundStyle(.secondary)
+                .foregroundColor(.secondary)
             + Text(value)
-                .foregroundStyle(.primary)
+                .foregroundColor(.primary)
             + Text("\u{201D}")
-                .foregroundStyle(.secondary)
+                .foregroundColor(.secondary)
         }
         .lineLimit(1)
         .opacity(isEnabled ? 1 : 0.4)
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleCustomFilterPreview: View {
     let field: String
     let match: String

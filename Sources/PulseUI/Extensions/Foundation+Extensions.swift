@@ -16,7 +16,7 @@ extension Character {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 extension AttributedString {
     package init(_ string: String, _ configure: (inout AttributeContainer) -> Void) {
         var attributes = AttributeContainer()

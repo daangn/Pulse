@@ -9,7 +9,7 @@ import Pulse
 import CoreData
 import Combine
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleToolbarView: View {
     @EnvironmentObject private var environment: ConsoleEnvironment
     @EnvironmentObject private var filters: ConsoleFiltersViewModel
@@ -41,12 +41,22 @@ struct ConsoleToolbarView: View {
         .animation(.snappy, value: searchViewModel.options)
         .animation(.snappy, value: searchViewModel.scopes)
         .animation(.snappy, value: isSearching)
+        .onChange(of: isSearching) { syncLegacySearchState($0) }
+    }
+
+    // On iOS 16 `searchable` has no `isPresented` binding, so mirror the
+    // environment search state into the view model. iOS 17+ drives it directly.
+    private func syncLegacySearchState(_ newValue: Bool) {
+        if #available(iOS 17, *) { return }
+        if searchViewModel.isSearching != newValue {
+            searchViewModel.isSearching = newValue
+        }
     }
 }
 
 private let consolePillResetXmarkWidth: CGFloat = 24
 
-@available(iOS 18, tvOS 18, macOS 15, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, visionOS 1, *)
 private struct ConsolePillResetXmark: View {
     let action: () -> Void
 
@@ -66,7 +76,7 @@ private struct ConsolePillResetXmark: View {
 
 /// Wraps a Button-style trigger in the standard console pill background,
 /// optionally appending a reset xmark button when `isActive` and `resetAction` is set.
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 private struct ConsoleTogglePill<Trigger: View>: View {
     let isActive: Bool
     var activeColor: Color = .accentColor
@@ -94,7 +104,7 @@ private struct ConsoleTogglePill<Trigger: View>: View {
 /// A pill whose entire surface is the label of a Menu, so tapping anywhere on the
 /// pill opens the menu. When `resetAction` is non-nil and `isActive`, an xmark
 /// reset button is overlaid on the trailing edge with its own tap area.
-@available(iOS 18, tvOS 18, macOS 15, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, visionOS 1, *)
 private struct ConsoleMenuPill<MenuContent: View>: View {
     let systemImage: String
     var title: String? = nil
@@ -134,7 +144,7 @@ private struct ConsoleMenuPill<MenuContent: View>: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 private struct ConsoleFilterPill: View {
     let isSearching: Bool
 
@@ -167,7 +177,7 @@ private struct ConsoleFilterPill: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ConsoleOnlyErrorsButton: View {
     @Binding package var isEnabled: Bool
 
@@ -189,7 +199,7 @@ package struct ConsoleOnlyErrorsButton: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 private struct ConsoleSessionsPill: View {
     @EnvironmentObject private var environment: ConsoleEnvironment
     @EnvironmentObject private var filters: ConsoleFiltersViewModel
@@ -215,7 +225,7 @@ private struct ConsoleSessionsPill: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 private struct ConsoleSortByPill: View {
     @EnvironmentObject private var environment: ConsoleEnvironment
 
@@ -256,7 +266,7 @@ private struct ConsoleSortByPill: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleSortByMenuContent: View {
     @EnvironmentObject private var environment: ConsoleEnvironment
 
@@ -281,7 +291,7 @@ struct ConsoleSortByMenuContent: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 package struct ConsoleSearchContextMenu<ViewModel: ConsoleSearchOptionsHost>: View {
     @ObservedObject var viewModel: ViewModel
     @State private var isPresented = false
@@ -328,7 +338,7 @@ package struct ConsoleSearchContextMenu<ViewModel: ConsoleSearchOptionsHost>: Vi
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 private struct ConsoleGroupByPill: View {
     @EnvironmentObject private var environment: ConsoleEnvironment
     @EnvironmentObject private var listViewModel: ConsoleListViewModel
@@ -368,7 +378,7 @@ private struct ConsoleGroupByPill: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleGroupByMenuContent: View {
     @EnvironmentObject private var environment: ConsoleEnvironment
 
@@ -389,7 +399,7 @@ struct ConsoleGroupByMenuContent: View {
     }
 }
 
-@available(iOS 18, tvOS 18, macOS 15, watchOS 11, visionOS 1, *)
+@available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleRemoveGroupingButton: View {
     @EnvironmentObject private var environment: ConsoleEnvironment
 
