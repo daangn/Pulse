@@ -99,7 +99,9 @@ final class URLSessionSwizzler {
         let originalImp: IMP = method_getImplementation(method)
         let closure: @convention(block) (AnyObject, AnyObject?) -> Void = { [weak self] object, error in
             let original: MethodSignature = unsafeBitCast(originalImp, to: MethodSignature.self)
-            original(object, selector, error)
+            URLSessionSwizzler.performDelivery(on: object) {
+                original(object, selector, error)
+            }
 
             if let task = object.value(forKey: "task") as? URLSessionTask {
                 // "_incompleteTaskMetrics"
@@ -133,13 +135,34 @@ final class URLSessionSwizzler {
         let originalImp: IMP = method_getImplementation(method)
         let closure: @convention(block) (AnyObject, AnyObject) -> Void = { [weak self] (object, data) in
             let original: MethodSignature = unsafeBitCast(originalImp, to: MethodSignature.self)
-            original(object, selector, data)
+            // A call made while the connection is already delivering is the system handing over the
+            // data it held back for content sniffing (for example, for "text/plain" responses). Every
+            // byte of it already passed through an earlier call, so logging it would duplicate the body.
+            let isRedelivery = URLSessionSwizzler.isDeliveryInProgress(on: object)
+            URLSessionSwizzler.performDelivery(on: object) {
+                original(object, selector, data)
+            }
 
-            if let task = object.value(forKey: "task") as? URLSessionDataTask {
+            if !isRedelivery, let task = object.value(forKey: "task") as? URLSessionDataTask {
                 let data = (data as? Data) ?? Data()
                 self?.logger.logDataTask(task, didReceive: data)
             }
         }
         method_setImplementation(method, imp_implementationWithBlock(closure))
+    }
+
+    private static var deliveryInProgressKey = 0
+
+    private static func isDeliveryInProgress(on connection: AnyObject) -> Bool {
+        objc_getAssociatedObject(connection, &deliveryInProgressKey) as? Bool ?? false
+    }
+
+    /// Marks the connection as delivering while `body` runs so that the data it
+    /// re-delivers from within the original implementation can be recognized.
+    private static func performDelivery(on connection: AnyObject, _ body: () -> Void) {
+        let wasDeliveryInProgress = isDeliveryInProgress(on: connection)
+        objc_setAssociatedObject(connection, &deliveryInProgressKey, true, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        body()
+        objc_setAssociatedObject(connection, &deliveryInProgressKey, wasDeliveryInProgress, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 }
