@@ -11,7 +11,13 @@ import CoreData
 
 @available(iOS 16, tvOS 16, macOS 13, watchOS 9, visionOS 1, *)
 struct ConsoleEntityCell: View {
-    let entity: NSManagedObject
+    /// Observed so that the `isDeleted` check below is re-evaluated when the
+    /// entity is deleted from under the list. The console keeps rendering the
+    /// entities it last fetched (`ConsoleListViewModel.visibleEntities` is not
+    /// refreshed while the list is scrolled away from the top), so without the
+    /// observation this view keeps a deleted entity on screen and the cell
+    /// traps reading its non-optional attributes.
+    @ObservedObject var entity: NSManagedObject
     var urlMatch: ConsoleSearchMatch?
 
     init(entity: NSManagedObject) {

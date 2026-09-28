@@ -11,6 +11,19 @@ private let timestampFormatter: DateFormatter = {
     return f
 }()
 
+/// Formats the entity's timestamp for display.
+///
+/// Reads `createdAt` via KVC so a NULL stored value (which Core Data reports for
+/// every attribute of a deleted object once the deletion is merged into the
+/// context) is surfaced as `nil` instead of trapping the ObjC->Swift `Date`
+/// bridge.
+private func makeFormattedTimestamp(for object: NSManagedObject) -> String {
+    guard let createdAt = object.value(forKey: "createdAt") as? Date else {
+        return "–"
+    }
+    return timestampFormatter.string(from: createdAt)
+}
+
 public final class LoggerSessionEntity: NSManagedObject {
     @NSManaged public var createdAt: Date
     @NSManaged public var id: UUID
@@ -32,7 +45,7 @@ public final class LoggerMessageEntity: NSManagedObject {
     @NSManaged public var task: NetworkTaskEntity?
 
     public lazy var metadata = { KeyValueEncoding.decodeKeyValuePairs(rawMetadata) }()
-    public lazy var formattedTimestamp: String = timestampFormatter.string(from: createdAt)
+    public lazy var formattedTimestamp: String = makeFormattedTimestamp(for: self)
 }
 
 public final class NetworkTaskEntity: NSManagedObject {
@@ -112,7 +125,7 @@ public final class NetworkTaskEntity: NSManagedObject {
     // MARK: Helpers
 
     public lazy var metadata = { rawMetadata.map(KeyValueEncoding.decodeKeyValuePairs) }()
-    public lazy var formattedTimestamp: String = timestampFormatter.string(from: createdAt)
+    public lazy var formattedTimestamp: String = makeFormattedTimestamp(for: self)
     public lazy var parsedURLComponents: URLComponents? = url.flatMap { URLComponents(string: $0) }
 
     // View-layer formatting caches populated by PulseUI. Keyed on the input
